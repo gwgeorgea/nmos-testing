@@ -71,6 +71,9 @@ CACHE_PATH = 'cache'
 # Timeout for any HTTP requests
 HTTP_TIMEOUT = 1
 
+# Delay expressed in seconds (s) for any request on IS-11
+DELAY = 3
+
 # Restrict the maximum number of resources or test points that time-consuming tests run against.
 # 0 = unlimited (all available resources or test points) for a really thorough test!
 MAX_TEST_ITERATIONS = 0
@@ -189,6 +192,14 @@ MQTT_PASSWORD = None
 
 # Bash shell to use for running testssl.sh
 TEST_SSL_BASH = "bash"
+
+# IS11_ReferenceSender to test IS-11 Receivers and an IS11_ReferenceReceiver to test IS-11
+# Senders under live streaming conditions. The URL of a device API is required to access the
+# IS-04 Node (http://{device}/x-nmos/node/v1.2), IS-05 Connection (http://{device}/x-nmos/connection/v1.1)
+# and IS-11 Stream Compatibility (http://{device}/x-nmos/streamcompatibility/v1.0)
+
+IS11_REFERENCE_SENDER = ""
+IS11_REFERENCE_RECEIVER = ""
 
 # Definition of each API specification and its versions.
 SPECIFICATIONS = {
