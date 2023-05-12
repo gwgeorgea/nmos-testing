@@ -2132,4 +2132,3 @@ class IS1101Test(GenericTest):
                 return test.FAIL("The patch to {} has failed: {}"
                                  .format(url + "single/senders/" + sender["id"] + "/staged/", response.json()))
         return test.PASS()
-
