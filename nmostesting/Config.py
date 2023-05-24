@@ -71,9 +71,6 @@ CACHE_PATH = 'cache'
 # Timeout for any HTTP requests
 HTTP_TIMEOUT = 1
 
-# Delay expressed in seconds (s) for any request on IS-11
-DELAY = 3
-
 # Restrict the maximum number of resources or test points that time-consuming tests run against.
 # 0 = unlimited (all available resources or test points) for a really thorough test!
 MAX_TEST_ITERATIONS = 0
