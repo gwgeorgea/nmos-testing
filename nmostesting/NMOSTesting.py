@@ -966,6 +966,14 @@ def run_noninteractive_tests(args):
     return exit_code
 
 
+def get_package_name(requirement):
+    pattern = r'^([^\s>=<]+)'
+    match = re.match(pattern, requirement)
+    if match:
+        return match.group(1)
+    return None
+
+
 def check_internal_requirements():
     corrections = {"gitpython": "git",
                    "pyopenssl": "OpenSSL",
@@ -976,7 +984,7 @@ def check_internal_requirements():
     installed_pkgs = [pkg[1] for pkg in pkgutil.iter_modules()]
     with open("requirements.txt") as requirements_file:
         for requirement in requirements_file.readlines():
-            requirement_name = requirement.strip().split(">")[0]
+            requirement_name = get_package_name(requirement)
             if requirement_name in corrections:
                 corrected_req = corrections[requirement_name]
             else:
@@ -1138,6 +1146,13 @@ def main(args):
 
     print(" * Testing tool running on 'http://{}:{}'. Version '{}'"
           .format(get_default_ip(), core_app.config['PORT'], TOOL_VERSION))
+
+    # Give an API or client that is already running a chance to use the mock services
+    # before running any test cases
+    if CONFIG.MOCK_SERVICES_WARM_UP_DELAY:
+        print(" * Waiting for {} seconds to allow discovery of mock services"
+              .format(CONFIG.MOCK_SERVICES_WARM_UP_DELAY))
+        time.sleep(CONFIG.MOCK_SERVICES_WARM_UP_DELAY)
 
     exit_code = 0
     if "suite" not in vars(CMD_ARGS):
