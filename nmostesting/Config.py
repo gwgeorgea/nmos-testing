@@ -61,6 +61,13 @@ API_PROCESSING_TIMEOUT = 1
 # Number of seconds to wait before timing out Controller test. Set to None to disable timeout mechanism
 CONTROLLER_TESTING_TIMEOUT = 120
 
+# When True invasive MS-05 tests will be run as part of MS0501Test test suite
+MS05_INVASIVE_TESTING = False
+
+# Used when MS05_INVASIVE_TESTING is set to True.
+# When True invasive MS-05 tests will use the TestingFacade to allow user interaction
+MS05_INTERACTIVE_TESTING = False
+
 # Set a Query API hostname/IP and port for use when operating without DNS-SD
 QUERY_API_HOST = "127.0.0.1"
 QUERY_API_PORT = 80
@@ -193,6 +200,16 @@ MQTT_PASSWORD = None
 # Bash shell to use for running testssl.sh
 TEST_SSL_BASH = "bash"
 
+# URLs of Node API and Connection API of a Node with reference Senders
+# for testing IS-11 Receivers under live streaming conditions.
+# Expected URL format is "{http|https}://{api_host}:{api_port}/x-nmos/{api_name}/v{api_version}/"
+IS11_REFERENCE_SENDER_NODE_API_URL = ""
+IS11_REFERENCE_SENDER_CONNECTION_API_URL = ""
+
+# Stability delay for any request on IS-11
+STABLE_STATE_DELAY = 3
+STABLE_STATE_ATTEMPTS = 5
+
 # Definition of each API specification and its versions.
 SPECIFICATIONS = {
     "is-04": {
@@ -280,6 +297,48 @@ SPECIFICATIONS = {
             }
         }
     },
+    "is-11": {
+        "repo": "is-11",
+        "versions": ["v1.0"],
+        "default_version": "v1.0",
+        "apis": {
+            "streamcompatibility": {
+                "name": "Stream Compatibility Management API",
+                "raml": "StreamCompatibilityManagementAPI.raml"
+            }
+        }
+    },
+    "is-12": {
+        "repo": "is-12",
+        "versions": ["v1.0"],
+        "default_version": "v1.0",
+        "apis": {
+            "ncp": {
+                "name": "Control Protocol"
+            },
+        }
+    },
+    "ms-05-02": {
+        "repo": "ms-05-02",
+        "versions": ["v1.0"],
+        "default_version": "v1.0",
+        "apis": {
+            "controlframework": {
+                "name": "Control Framework"
+            },
+        }
+    },
+    "nmos-control-feature-sets": {
+        "repo": "nmos-control-feature-sets",
+        "versions": ["main"],
+        "default_version": "main",
+        "apis": {
+            "featuresets": {
+                "name": "Control Feature Sets",
+                "repo_paths": ["identification", "monitoring"]
+            }
+        }
+    },
     "bcp-002-01": {
         "repo": "bcp-002-01",
         "versions": ["v1.0"],
@@ -316,6 +375,12 @@ SPECIFICATIONS = {
             }
         }
     },
+    "bcp-005-01": {
+        "repo": "bcp-005-01",
+        "versions": ["v1.0"],
+        "default_version": "v1.0",
+        "apis": {}
+    },
     "nmos-parameter-registers": {
         "repo": "nmos-parameter-registers",
         "versions": ["main"],
@@ -332,7 +397,7 @@ SPECIFICATIONS = {
             }
         }
     },
-    "controller-tests": {
+    "testing-facade": {
         "repo": None,
         "versions": ["v1.0"],
         "default_version": "v1.0",
